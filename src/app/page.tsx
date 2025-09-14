@@ -5,6 +5,7 @@ export default function Home() {
     <div className="flex justify-center gap-5 mt-5">
       <div>Hello People</div>
       <ThemeToggle />
+      <p>Authentication & Authorization coming soon...</p>
     </div>
   );
 }
