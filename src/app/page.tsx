@@ -1,3 +1,10 @@
+import { ThemeToggle } from "../components/toggle-theme";
+
 export default function Home() {
-  return <div className="text-green-400">Hello People</div>;
+  return (
+    <div className="flex justify-center gap-5 mt-5">
+      <div>Hello People</div>
+      <ThemeToggle />
+    </div>
+  );
 }
