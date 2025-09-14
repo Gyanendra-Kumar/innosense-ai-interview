@@ -31,4 +31,4 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Deploy to Vercel
-        run: npx vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }} --org ${{ secrets.VERCEL_ORG_ID }} --project ${{ secrets.VERCEL_PROJECT_ID }}
+        run: npx vercel --prod --confirm --scope ${{ secrets.VERCEL_ORG_ID }} --token ${{ secrets.VERCEL_TOKEN }}
