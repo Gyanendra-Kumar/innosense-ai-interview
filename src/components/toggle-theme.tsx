@@ -14,7 +14,7 @@ export function ThemeToggle() {
       className="relative w-12 h-6 rounded-full bg-accent dark:bg-primary transition-colors flex items-center px-1"
     >
       <motion.div
-        animate={{ x: isDark ? 20 : 0 }} // shift to right when dark
+        animate={{ x: isDark ? 22 : -1 }} // shift to right when dark
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
         className={`w-5 h-5 rounded-full flex items-center justify-center shadow cursor-pointer ${
           isDark ? "bg-gray-900" : "bg-white"
