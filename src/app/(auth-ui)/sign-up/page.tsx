@@ -21,7 +21,7 @@ import {
 import { Input } from "../../../components/ui/input";
 import { authClient } from "../../../lib/auth-client";
 
-const loginFormSchema = z.object({
+const signUpFormSchema = z.object({
   email: z.string().email("Please enter your email."),
   name: z.string().min(1, "Please enter your name."),
   password: z
@@ -32,10 +32,10 @@ const loginFormSchema = z.object({
     ),
 });
 
-type loginFormType = z.infer<typeof loginFormSchema>;
+type signUpFormType = z.infer<typeof signUpFormSchema>;
 
 interface FormFieldType {
-  name: keyof loginFormType;
+  name: keyof signUpFormType;
   label: string;
   type: string;
   placeholder: string;
@@ -62,9 +62,9 @@ const formField: FormFieldType[] = [
   },
 ];
 
-const SignIn = () => {
-  const form = useForm<loginFormType>({
-    resolver: zodResolver(loginFormSchema),
+const SignUp = () => {
+  const form = useForm<signUpFormType>({
+    resolver: zodResolver(signUpFormSchema),
     defaultValues: {
       email: "",
       name: "",
@@ -72,7 +72,7 @@ const SignIn = () => {
     },
   });
 
-  function onSubmit(values: loginFormType) {
+  function onSubmit(values: signUpFormType) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
@@ -146,4 +146,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
