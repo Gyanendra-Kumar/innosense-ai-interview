@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { Button } from "../../../components/ui/button";
@@ -55,6 +56,7 @@ const formField: FormFieldType[] = [
 ];
 
 const SignIn = () => {
+  const router = useRouter();
   const form = useForm<loginFormType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -63,14 +65,20 @@ const SignIn = () => {
     },
   });
 
-  function onSubmit(values: loginFormType) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit(values: loginFormType) {
     console.log(values);
-    authClient.signIn.email({
+    const { data, error } = await authClient.signIn.email({
       email: values.email,
       password: values.password,
+      rememberMe: false,
     });
+
+    if (error) {
+      console.log("error: ", error);
+    } else {
+      console.log("data: ", data);
+      router.push("/");
+    }
   }
   return (
     <section className="flex justify-center items-center min-h-screen">
