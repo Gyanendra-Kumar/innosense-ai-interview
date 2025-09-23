@@ -11,12 +11,12 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="relative w-12 h-6 rounded-full bg-accent dark:bg-primary transition-colors flex items-center px-1"
+      className="relative w-10 h-5 rounded-full bg-accent dark:bg-primary transition-colors flex items-center px-1"
     >
       <motion.div
-        animate={{ x: isDark ? 22 : -1 }} // shift to right when dark
-        transition={{ type: "spring", stiffness: 300, damping: 25 }}
-        className={`w-5 h-5 rounded-full flex items-center justify-center shadow cursor-pointer ${
+        animate={{ x: isDark ? 18 : -1 }} // shift to right when dark
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className={`w-4 h-4 rounded-full flex items-center justify-center shadow cursor-pointer ${
           isDark ? "bg-gray-900" : "bg-white"
         }`}
       >
