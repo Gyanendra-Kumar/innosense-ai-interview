@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeToggle } from "../../components/toggle-theme";
+import { ThemeToggle } from "../../modules/theme/toggle-theme";
 import { Button } from "../../components/ui/button";
 import { authClient } from "../../lib/auth-client";
 

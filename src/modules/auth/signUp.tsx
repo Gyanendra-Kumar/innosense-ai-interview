@@ -1,25 +1,20 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import z from "zod";
-import { Button } from "../../../components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../../../components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "../../../components/ui/form";
-import { Input } from "../../../components/ui/input";
-import { authClient } from "../../../lib/auth-client";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
 
 const signUpFormSchema = z.object({
   email: z.string().email("Please enter your email."),
@@ -62,7 +57,7 @@ const formField: FormFieldType[] = [
   },
 ];
 
-const SignUp = () => {
+const SignUpView = () => {
   const form = useForm<signUpFormType>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
@@ -93,7 +88,7 @@ const SignUp = () => {
     );
   }
   return (
-    <section className="flex justify-center items-center min-h-screen">
+    <section>
       <Card className="bg-card w-96 shadow-lg">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl text-foreground">Sign Up</CardTitle>
@@ -146,4 +141,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpView;
