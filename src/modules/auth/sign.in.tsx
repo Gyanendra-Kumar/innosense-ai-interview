@@ -154,7 +154,7 @@ const SignInView = () => {
                   {pending ? (
                     <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
                   ) : null}
-                  Login
+                  Sign In
                 </Button>
 
                 <div className="after:border-border relative text-center tex-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
@@ -163,10 +163,26 @@ const SignInView = () => {
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <Button variant="outline" type="button" className="w-full">
+                  <Button
+                    variant="outline"
+                    type="button"
+                    disabled={pending}
+                    className="w-full"
+                  >
+                    {/* {pending ? (
+                      <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
+                    ) : null} */}
                     Google
                   </Button>
-                  <Button variant="outline" type="button" className="w-full">
+                  <Button
+                    variant="outline"
+                    type="button"
+                    disabled={pending}
+                    className="w-full"
+                  >
+                    {/* {pending ? (
+                      <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
+                    ) : null} */}
                     GitHub
                   </Button>
                 </div>
