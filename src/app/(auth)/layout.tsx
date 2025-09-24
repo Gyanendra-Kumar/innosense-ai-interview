@@ -13,7 +13,6 @@ export default function AuthLayout({
 }>) {
   return (
     <div className="auth-layout">
-      {" "}
       <ThemeToggle />
       {children}
     </div>
