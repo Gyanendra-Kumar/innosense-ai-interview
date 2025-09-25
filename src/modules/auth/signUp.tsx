@@ -40,7 +40,7 @@ const signUpFormSchema = z
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
-    path: ["confirmPassword"], // Set the path of the error to the confirmPassword field
+    path: ["confirmPassword"],
   });
 
 type signUpFormType = z.infer<typeof signUpFormSchema>;
@@ -98,13 +98,11 @@ const SignUpView = () => {
     setError(null);
     setPending(true);
 
-    console.log(values);
     authClient.signUp.email(
       {
         email: values.email,
         name: values.name,
         password: values.password,
-        // confirmPassword: values.confirmPassword,
       },
       {
         onSuccess: () => {
@@ -118,12 +116,43 @@ const SignUpView = () => {
       }
     );
   }
+
+  const handleGoogleSignUp = async () => {
+    setError(null);
+    setPending(true);
+
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+    } catch (err) {
+      setPending(false);
+      setError("Google sign-up failed. Please try again.");
+    }
+  };
+
+  const handleGitHubSignUp = async () => {
+    setError(null);
+    setPending(true);
+
+    try {
+      await authClient.signIn.social({
+        provider: "github",
+        callbackURL: "/",
+      });
+    } catch (err) {
+      setPending(false);
+      setError("GitHub sign-up failed. Please try again.");
+    }
+  };
+
   return (
     <section className="flex flex-col gap-6">
       <Card className="bg-card shadow-lg overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
           {/* LEFT SECTION */}
-          <div className="bg-radial from-green-700 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
+          <div className="bg-gradient-to-br from-green-700 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
             {/* Logo */}
             <SmoothPulseSVG />
             <p className="text-2xl font-semibold text-white whitespace-nowrap">
@@ -194,21 +223,24 @@ const SignUpView = () => {
                   Sign Up
                 </Button>
 
-                <div className="after:border-border relative text-center tex-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
+                {/* <div className="after:border-border relative text-center tex-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                   <span className="bg-card text-muted-foreground relative z-10 px-2">
                     Or continue with
                   </span>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
+                </div> */}
+
+                {/* GITHUB AND GOOGLE TO SIGN-UP */}
+                {/* <div className="grid grid-cols-2 gap-4">
                   <Button
                     variant="outline"
                     type="button"
                     disabled={pending}
                     className="w-full"
+                    onClick={handleGoogleSignUp}
                   >
-                    {/* {pending ? (
+                    {pending ? (
                       <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
-                    ) : null} */}
+                    ) : null}
                     Google
                   </Button>
                   <Button
@@ -216,13 +248,15 @@ const SignUpView = () => {
                     type="button"
                     disabled={pending}
                     className="w-full"
+                    onClick={handleGitHubSignUp}
                   >
-                    {/* {pending ? (
+                    {pending ? (
                       <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
-                    ) : null} */}
+                    ) : null}
                     GitHub
                   </Button>
-                </div>
+                </div> */}
+
                 <div className="text-center text-sm">
                   Already have an account?{" "}
                   <Link href="/sign-in" className="auth-link">
