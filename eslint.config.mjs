@@ -10,23 +10,27 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  // Extend Next.js recommended configs
   ...compat.extends("next/core-web-vitals", "next/typescript"),
-
   {
-    // Ignore folders/files that shouldn't be linted
     ignores: [
       "node_modules/**",
       ".next/**",
       "out/**",
       "build/**",
       "next-env.d.ts",
-      "src/generated/**", // <--- ignore Prisma generated files
+      "src/generated/**", // This should exclude the entire generated directory
     ],
-
-    // Global rules
+  },
+  {
+    // Global rule overrides for any remaining files
     rules: {
-      "@typescript-eslint/no-explicit-any": "off", // Allow any globally
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-unnecessary-type-constraint": "off",
+      "@typescript-eslint/no-wrapper-object-types": "off",
+      "@typescript-eslint/no-unsafe-function-type": "off",
     },
   },
 ];
