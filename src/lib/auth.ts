@@ -17,8 +17,8 @@ export const auth = betterAuth({
     },
     github: {
       prompt: "select_account",
-      clientId: process.env.GITHUB_CLIENT_ID as string,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+      clientId: process.env.NEXT_GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.NEXT_GITHUB_CLIENT_SECRET as string,
     },
   },
   rateLimit: {
