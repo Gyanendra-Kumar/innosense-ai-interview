@@ -91,6 +91,28 @@ const SignInView = () => {
     );
   };
 
+  const handleSocialSignIn = async (provider: "google" | "github") => {
+    setError(null);
+    setPending(true);
+    try {
+      await authClient.signIn.social(
+        {
+          provider,
+        },
+        {
+          onSuccess: () => {
+            setPending(false);
+            router.push("/");
+          },
+          onError: ({ error }) => {
+            setPending(false);
+            setError(error.message);
+          },
+        }
+      );
+    } catch (error) {}
+  };
+
   return (
     <section className="flex flex-col gap-6">
       <Card className="bg-card shadow-lg overflow-hidden p-0">
@@ -168,6 +190,7 @@ const SignInView = () => {
                     type="button"
                     disabled={pending}
                     className="w-full"
+                    onClick={() => handleSocialSignIn("google")}
                   >
                     {/* {pending ? (
                       <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
@@ -179,6 +202,7 @@ const SignInView = () => {
                     type="button"
                     disabled={pending}
                     className="w-full"
+                    onClick={() => handleSocialSignIn("github")}
                   >
                     {/* {pending ? (
                       <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
