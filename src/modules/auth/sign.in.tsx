@@ -91,6 +91,28 @@ const SignInView = () => {
     );
   };
 
+  const handleSocialSignIn = async (provider: "google" | "github") => {
+    setError(null);
+    setPending(true);
+    try {
+      await authClient.signIn.social(
+        {
+          provider,
+        },
+        {
+          onSuccess: () => {
+            setPending(false);
+            router.push("/");
+          },
+          onError: ({ error }) => {
+            setPending(false);
+            setError(error.message);
+          },
+        }
+      );
+    } catch (error) {}
+  };
+
   return (
     <section className="flex flex-col gap-6">
       <Card className="bg-card shadow-lg overflow-hidden p-0">
@@ -162,16 +184,19 @@ const SignInView = () => {
                     Or continue with
                   </span>
                 </div>
+
+                {/* GOOGLE AND GITHUB TO SIGN-IN */}
                 <div className="grid grid-cols-2 gap-4">
                   <Button
                     variant="outline"
                     type="button"
                     disabled={pending}
                     className="w-full"
+                    onClick={() => handleSocialSignIn("google")}
                   >
-                    {/* {pending ? (
+                    {pending ? (
                       <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
-                    ) : null} */}
+                    ) : null}
                     Google
                   </Button>
                   <Button
@@ -179,13 +204,15 @@ const SignInView = () => {
                     type="button"
                     disabled={pending}
                     className="w-full"
+                    onClick={() => handleSocialSignIn("github")}
                   >
-                    {/* {pending ? (
+                    {pending ? (
                       <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
-                    ) : null} */}
+                    ) : null}
                     GitHub
                   </Button>
                 </div>
+
                 <div className="text-center text-sm">
                   Don&apos;t have an account?{" "}
                   <Link href="/sign-up" className="auth-link">
@@ -196,7 +223,7 @@ const SignInView = () => {
             </form>
           </Form>
 
-          <div className="bg-radial from-green-700 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
+          <div className="bg-gradient-to-br from-green-700 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
             {/* Logo */}
             <SmoothPulseSVG />
             <p className="text-2xl font-semibold text-white whitespace-nowrap">
