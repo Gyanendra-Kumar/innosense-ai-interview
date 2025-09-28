@@ -40,7 +40,7 @@ const signUpFormSchema = z
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
-    path: ["confirmPassword"], // Set the path of the error to the confirmPassword field
+    path: ["confirmPassword"],
   });
 
 type signUpFormType = z.infer<typeof signUpFormSchema>;
@@ -98,13 +98,11 @@ const SignUpView = () => {
     setError(null);
     setPending(true);
 
-    console.log(values);
     authClient.signUp.email(
       {
         email: values.email,
         name: values.name,
         password: values.password,
-        // confirmPassword: values.confirmPassword,
       },
       {
         onSuccess: () => {
@@ -118,12 +116,43 @@ const SignUpView = () => {
       }
     );
   }
+
+  const handleGoogleSignUp = async () => {
+    setError(null);
+    setPending(true);
+
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+    } catch (err) {
+      setPending(false);
+      setError("Google sign-up failed. Please try again.");
+    }
+  };
+
+  const handleGitHubSignUp = async () => {
+    setError(null);
+    setPending(true);
+
+    try {
+      await authClient.signIn.social({
+        provider: "github",
+        callbackURL: "/",
+      });
+    } catch (err) {
+      setPending(false);
+      setError("GitHub sign-up failed. Please try again.");
+    }
+  };
+
   return (
     <section className="flex flex-col gap-6">
       <Card className="bg-card shadow-lg overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
           {/* LEFT SECTION */}
-          <div className="bg-radial from-green-700 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
+          <div className="bg-gradient-to-br from-green-700 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
             {/* Logo */}
             <SmoothPulseSVG />
             <p className="text-2xl font-semibold text-white whitespace-nowrap">
