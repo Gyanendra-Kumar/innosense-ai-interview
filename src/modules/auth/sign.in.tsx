@@ -91,34 +91,26 @@ const SignInView = () => {
     );
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleSocialSignIn = async (provider: "google" | "github") => {
     setError(null);
     setPending(true);
-
     try {
-      await authClient.signIn.social({
-        provider: "google",
-        callbackURL: "/",
-      });
-    } catch (err) {
-      setPending(false);
-      setError("Google sign-in failed. Please try again.");
-    }
-  };
-
-  const handleGitHubSignIn = async () => {
-    setError(null);
-    setPending(true);
-
-    try {
-      await authClient.signIn.social({
-        provider: "github",
-        callbackURL: "/",
-      });
-    } catch (err) {
-      setPending(false);
-      setError("GitHub sign-in failed. Please try again.");
-    }
+      await authClient.signIn.social(
+        {
+          provider,
+        },
+        {
+          onSuccess: () => {
+            setPending(false);
+            router.push("/");
+          },
+          onError: ({ error }) => {
+            setPending(false);
+            setError(error.message);
+          },
+        }
+      );
+    } catch (error) {}
   };
 
   return (
@@ -187,20 +179,20 @@ const SignInView = () => {
                   Sign In
                 </Button>
 
-                {/* <div className="after:border-border relative text-center tex-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
+                <div className="after:border-border relative text-center tex-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                   <span className="bg-card text-muted-foreground relative z-10 px-2">
                     Or continue with
                   </span>
-                </div> */}
+                </div>
 
                 {/* GOOGLE AND GITHUB TO SIGN-IN */}
-                {/* <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4">
                   <Button
                     variant="outline"
                     type="button"
                     disabled={pending}
                     className="w-full"
-                    onClick={handleGoogleSignIn}
+                    onClick={() => handleSocialSignIn("google")}
                   >
                     {pending ? (
                       <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
@@ -212,14 +204,14 @@ const SignInView = () => {
                     type="button"
                     disabled={pending}
                     className="w-full"
-                    onClick={handleGitHubSignIn}
+                    onClick={() => handleSocialSignIn("github")}
                   >
                     {pending ? (
                       <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
                     ) : null}
                     GitHub
                   </Button>
-                </div> */}
+                </div>
 
                 <div className="text-center text-sm">
                   Don&apos;t have an account?{" "}
