@@ -7,3 +7,8 @@ export interface UserType {
   name: string;
   image?: string | null | undefined;
 }
+
+export interface TooltipType {
+  children: React.ReactNode;
+  content: string;
+}

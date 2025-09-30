@@ -1,12 +1,12 @@
 import { UserDropdown } from "@/components/user-dropdown";
+import { getUser } from "@/lib/getUser";
+import { ThemeToggle } from "@/modules/theme/toggle-theme";
+import Image from "next/image";
 import Link from "next/link";
-import { getSession } from "../../lib/getSession";
-import { ThemeToggle } from "../../modules/theme/toggle-theme";
+import IaTooltip from "../../components/Tooltip";
 
 export async function Navbar() {
-  const session = await getSession();
-  const user = session?.user;
-
+  const user = await getUser();
   if (!user) return null;
 
   return (
@@ -16,9 +16,17 @@ export async function Navbar() {
           href={user ? "/main" : "/"}
           className="flex items-center gap-2 font-semibold text-gradient"
         >
-          InnoSense AI
+          {/* InnoSense AI */}
+          <IaTooltip content="InnoSense AI Interview">
+            <Image
+              src="/loading.svg"
+              alt="InnoSense AI Interview logo"
+              width={40}
+              height={40}
+            />
+          </IaTooltip>
         </Link>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2" suppressHydrationWarning>
           <ThemeToggle />
           <UserDropdown user={user} />
         </div>

@@ -1,18 +1,7 @@
-"use client";
+import { getUser } from "@/lib/getUser";
 
-import { useEffect, useState } from "react";
-import { UserType } from "../../../types.ts";
-import { getUser } from "../../lib/getUser";
-
-const MainPage = () => {
-  const [user, setUser] = useState<UserType | null>();
-
-  useEffect(() => {
-    (async () => {
-      const data = await getUser();
-      setUser(data ?? null);
-    })();
-  }, []);
+const MainPage = async () => {
+  const user = await getUser();
 
   return (
     <main>
