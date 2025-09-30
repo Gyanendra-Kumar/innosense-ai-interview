@@ -1,14 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { authClient } from "../lib/auth-client";
-import MainPage from "./(main)/page";
 
 export default function Home() {
+  const router = useRouter();
+
   const {
     data: session,
     isPending, //loading state
   } = authClient.useSession();
+
+  useEffect(() => {
+    if (session) {
+      router.push("/main");
+    }
+  }, [session, router]);
 
   if (isPending) {
     return (
@@ -27,10 +36,5 @@ export default function Home() {
     );
   }
 
-  console.log("session: ", session);
-  return (
-    <div className="flex flex-col justify-center items-center gap-5 mt-5">
-      <MainPage user={session.user}/>
-    </div>
-  );
+  return null;
 }

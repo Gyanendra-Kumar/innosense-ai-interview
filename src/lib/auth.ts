@@ -31,3 +31,6 @@ export const auth = betterAuth({
     updateAge: 60 * 60 * 4, // 1 day (every 4 hours the session expiration is updated)
   },
 });
+
+export type Session = typeof auth.$Infer.Session;
+export type User = typeof auth.$Infer.Session.user;

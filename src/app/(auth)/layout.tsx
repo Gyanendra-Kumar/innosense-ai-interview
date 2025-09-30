@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ThemeToggle } from "../../modules/theme/toggle-theme";
 
 export const metadata: Metadata = {
   title: "InnoSense AI Interview | Auth",
@@ -11,10 +10,5 @@ export default function AuthLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <div className="auth-layout">
-      <ThemeToggle />
-      {children}
-    </div>
-  );
+  return <div className="auth-layout">{children}</div>;
 }
