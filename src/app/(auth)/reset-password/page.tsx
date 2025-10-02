@@ -1,4 +1,4 @@
-import { SearchParamsType } from "../../../../types.ts";
+import { SearchParamsType } from "../../../../types";
 import ResetPasswordView from "../../../modules/auth/reset-password";
 
 export const metadata = {
