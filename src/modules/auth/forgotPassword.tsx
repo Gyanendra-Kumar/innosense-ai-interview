@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { OctagonAlertIcon } from "lucide-react";
+import { CircleCheckBig, OctagonAlertIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -22,29 +22,11 @@ import SmoothPulseSVG from "../../components/animation/smoothPulse";
 import { Alert, AlertTitle } from "../../components/ui/alert";
 import Policy from "../Policy";
 
-const signUpFormSchema = z
-  .object({
-    email: z.string().email("Please enter your email."),
-    name: z.string().min(1, "Please enter your name."),
-    password: z
-      .string()
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
-        "Password must be at least 8 characters long, include uppercase, lowercase, number, and special character."
-      ),
-    confirmPassword: z
-      .string()
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
-        "Password must be at least 8 characters long, include uppercase, lowercase, number, and special character."
-      ),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+const ForgotPasswordSchema = z.object({
+  email: z.string().email("Please enter your email."),
+});
 
-type signUpFormType = z.infer<typeof signUpFormSchema>;
+type signUpFormType = z.infer<typeof ForgotPasswordSchema>;
 
 interface FormFieldType {
   name: keyof signUpFormType;
@@ -55,43 +37,23 @@ interface FormFieldType {
 
 const formField: FormFieldType[] = [
   {
-    label: "Name",
-    name: "name",
-    type: "text",
-    placeholder: "Enter your name",
-  },
-  {
     label: "Email",
     name: "email",
     type: "email",
     placeholder: "you@example.com",
   },
-  {
-    label: "Password",
-    name: "password",
-    type: "password",
-    placeholder: "********",
-  },
-  {
-    label: "Confirm Password",
-    name: "confirmPassword",
-    type: "password",
-    placeholder: "********",
-  },
 ];
 
-const SignUpView = () => {
+const ForgotPasswordView = () => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
   const [pending, setPending] = useState<boolean>(false);
 
   const form = useForm<signUpFormType>({
-    resolver: zodResolver(signUpFormSchema),
+    resolver: zodResolver(ForgotPasswordSchema),
     defaultValues: {
       email: "",
-      name: "",
-      password: "",
-      confirmPassword: "",
     },
   });
 
@@ -99,54 +61,28 @@ const SignUpView = () => {
     setError(null);
     setPending(true);
 
-    authClient.signUp.email(
+    authClient.requestPasswordReset(
       {
         email: values.email,
-        name: values.name,
-        password: values.password,
+        redirectTo: "/reset-password",
       },
       {
         onSuccess: () => {
           setPending(false);
-          router.push("/");
+          setMessage(
+            "If an account exists for this email, we've sent a password reset link."
+          );
+          setTimeout(() => {
+            router.push("/");
+          }, 3000);
         },
         onError: ({ error }) => {
           setPending(false);
-          setError(error.message);
+          setError(error.message ?? "Something went wrong!");
         },
       }
     );
   }
-
-  const handleGoogleSignUp = async () => {
-    setError(null);
-    setPending(true);
-
-    try {
-      await authClient.signIn.social({
-        provider: "google",
-        callbackURL: "/",
-      });
-    } catch (err) {
-      setPending(false);
-      setError("Google sign-up failed. Please try again.");
-    }
-  };
-
-  const handleGitHubSignUp = async () => {
-    setError(null);
-    setPending(true);
-
-    try {
-      await authClient.signIn.social({
-        provider: "github",
-        callbackURL: "/",
-      });
-    } catch (err) {
-      setPending(false);
-      setError("GitHub sign-up failed. Please try again.");
-    }
-  };
 
   return (
     <section className="flex flex-col gap-6">
@@ -166,9 +102,10 @@ const SignUpView = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-8">
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col items-center text-center gap-2">
-                  <h1 className="text-2xl font-bold">Let&apos;s get started</h1>
-                  <p className="text-primary text-balance">
-                    Create your account
+                  <h1 className="text-2xl font-bold">Forgot password</h1>
+                  <p className="text-primary text-sm w-72">
+                    Enter your email address and we&apos;ll send you a link to
+                    reset your password.
                   </p>
                 </div>
                 <div className="grid gap-2">
@@ -212,6 +149,16 @@ const SignUpView = () => {
                     <AlertTitle>{error}</AlertTitle>
                   </Alert>
                 )}
+                {!!message && (
+                  <div className="w-80">
+                    <Alert className="bg-green-400/50 border-none">
+                      <CircleCheckBig className="h-3 w-4 text-green-900" />
+                      <AlertTitle className="text-wrap break-words">
+                        {message}
+                      </AlertTitle>
+                    </Alert>
+                  </div>
+                )}
 
                 <Button
                   type="submit"
@@ -221,13 +168,13 @@ const SignUpView = () => {
                   {pending ? (
                     <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
                   ) : null}
-                  Sign Up
+                  Send reset link
                 </Button>
 
                 <div className="text-center text-sm">
-                  Already have an account?{" "}
-                  <Link href="/sign-in" className="auth-link">
-                    Sign In
+                  Go back to{" "}
+                  <Link href="/" className="auth-link">
+                    Home
                   </Link>
                 </div>
               </div>
@@ -235,9 +182,9 @@ const SignUpView = () => {
           </Form>
         </CardContent>
       </Card>
-     <Policy />
+      <Policy />
     </section>
   );
 };
 
-export default SignUpView;
+export default ForgotPasswordView;

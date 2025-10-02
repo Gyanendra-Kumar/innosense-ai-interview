@@ -2,29 +2,45 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { authClient } from "../lib/auth-client";
+import { useEffect, useState } from "react";
+import { getUser } from "../lib/getUser";
+import Loader from "../modules/Loader";
 
 export default function Home() {
   const router = useRouter();
-  const { data: session, isPending } = authClient.useSession();
+  // const { data: session, isPending } = authClient.useSession();
+  const [user, setUser] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const u = await getUser();
+        if (mounted) setUser(u ?? null);
+      } catch (e) {
+        if (mounted) setUser(null);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   // Redirect after render
   useEffect(() => {
-    if (session) {
+    if (!loading && user) {
       router.push("/main");
     }
-  }, [session, router]);
+  }, [loading, user, router]);
 
-  if (isPending) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="loader" />
-      </div>
-    );
+  if (loading) {
+    return <Loader />;
   }
 
-  if (!session) {
+  if (!user) {
     return (
       <div className="flex flex-col gap-4 items-center justify-center min-h-screen">
         <Link href="/sign-in">Sign In</Link>
@@ -34,5 +50,5 @@ export default function Home() {
   }
 
   // Optional: render nothing while redirecting
-  return null;
+  return <Loader />;
 }

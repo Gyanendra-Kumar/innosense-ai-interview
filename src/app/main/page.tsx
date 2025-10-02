@@ -1,7 +1,11 @@
 import { getUser } from "@/lib/getUser";
+import { redirect } from "next/navigation";
 
 const MainPage = async () => {
   const user = await getUser();
+  if (!user) {
+    redirect("/sign-in");
+  }
 
   return (
     <main>

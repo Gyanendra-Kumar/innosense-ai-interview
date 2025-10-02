@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import SmoothPulseSVG from "../../components/animation/smoothPulse";
 import { Alert, AlertTitle } from "../../components/ui/alert";
+import Policy from "../Policy";
 
 const loginFormSchema = z.object({
   email: z.string().email("Please enter your email"),
@@ -58,7 +59,9 @@ const formField: FormFieldType[] = [
 const SignInView = () => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
-  const [pending, setPending] = useState(false);
+  const [pendingEmail, setPendingEmail] = useState(false);
+  const [pendingGoogle, setPendingGoogle] = useState(false);
+  const [pendingGithub, setPendingGithub] = useState(false);
 
   const form = useForm<loginFormType>({
     resolver: zodResolver(loginFormSchema),
@@ -70,7 +73,7 @@ const SignInView = () => {
 
   const onSubmit = (data: loginFormType) => {
     setError(null);
-    setPending(true);
+    setPendingEmail(true);
 
     authClient.signIn.email(
       {
@@ -80,11 +83,11 @@ const SignInView = () => {
       },
       {
         onSuccess: () => {
-          setPending(false);
+          setPendingEmail(false);
           router.push("/");
         },
         onError: ({ error }) => {
-          setPending(false);
+          setPendingEmail(false);
           setError(error.message);
         },
       }
@@ -93,7 +96,9 @@ const SignInView = () => {
 
   const handleSocialSignIn = async (provider: "google" | "github") => {
     setError(null);
-    setPending(true);
+    if (provider === "google") setPendingGoogle(true);
+    if (provider === "github") setPendingGithub(true);
+
     try {
       await authClient.signIn.social(
         {
@@ -101,16 +106,21 @@ const SignInView = () => {
         },
         {
           onSuccess: () => {
-            setPending(false);
+            if (provider === "google") setPendingGoogle(false);
+            if (provider === "github") setPendingGithub(false);
             router.push("/");
           },
           onError: ({ error }) => {
-            setPending(false);
+            if (provider === "google") setPendingGoogle(false);
+            if (provider === "github") setPendingGithub(false);
             setError(error.message);
           },
         }
       );
-    } catch (error) {}
+    } catch (error) {
+      setPendingGoogle(false);
+      setPendingGithub(false);
+    }
   };
 
   return (
@@ -167,17 +177,26 @@ const SignInView = () => {
                     <AlertTitle>{error}</AlertTitle>
                   </Alert>
                 )}
-
-                <Button
-                  type="submit"
-                  className="w-full cursor-pointer "
-                  disabled={pending}
-                >
-                  {pending ? (
-                    <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
-                  ) : null}
-                  Sign In
-                </Button>
+                <div>
+                  <Button
+                    type="submit"
+                    className="w-full cursor-pointer "
+                    disabled={pendingEmail || pendingGoogle || pendingGithub}
+                  >
+                    {pendingEmail ? (
+                      <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
+                    ) : null}
+                    Sign In
+                  </Button>
+                  <div className="flex justify-end w-full">
+                    <Link
+                      href="/forgot-password"
+                      className="auth-link after:!h-[1px] text-xs mt-1"
+                    >
+                      Forgot Password
+                    </Link>
+                  </div>
+                </div>
 
                 <div className="after:border-border relative text-center tex-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                   <span className="bg-card text-muted-foreground relative z-10 px-2">
@@ -190,11 +209,11 @@ const SignInView = () => {
                   <Button
                     variant="outline"
                     type="button"
-                    disabled={pending}
+                    disabled={pendingEmail || pendingGoogle || pendingGithub}
                     className="w-full"
                     onClick={() => handleSocialSignIn("google")}
                   >
-                    {pending ? (
+                    {pendingGoogle ? (
                       <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
                     ) : null}
                     Google
@@ -202,11 +221,11 @@ const SignInView = () => {
                   <Button
                     variant="outline"
                     type="button"
-                    disabled={pending}
+                    disabled={pendingEmail || pendingGoogle || pendingGithub}
                     className="w-full"
                     onClick={() => handleSocialSignIn("github")}
                   >
-                    {pending ? (
+                    {pendingGithub ? (
                       <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
                     ) : null}
                     GitHub
@@ -232,16 +251,7 @@ const SignInView = () => {
           </div>
         </CardContent>
       </Card>
-      <div className="text-xs text-muted-foreground text-center text-balance">
-        By clicking continue, you agree to our{" "}
-        <a href="#" className="auth-link after:!h-[1px]">
-          Term of Service
-        </a>{" "}
-        and{" "}
-        <a href="#" className="auth-link after:!h-[1px]">
-          Privacy Policy
-        </a>
-      </div>
+      <Policy />
     </section>
   );
 };
