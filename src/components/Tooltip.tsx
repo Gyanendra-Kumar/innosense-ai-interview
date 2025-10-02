@@ -1,4 +1,4 @@
-import { TooltipType } from "../../types.ts";
+import { TooltipType } from "../../types";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 const IaTooltip = ({ children, content }: TooltipType) => {

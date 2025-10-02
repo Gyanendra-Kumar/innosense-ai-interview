@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { UserType } from "../../types.ts";
+import { UserType } from "../../types";
 import { getUser } from "../lib/getUser";
 import Loader from "../modules/Loader";
 

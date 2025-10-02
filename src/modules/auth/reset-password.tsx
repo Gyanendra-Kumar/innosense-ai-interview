@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { ResetPasswordUIProps } from "../../../types.ts";
+import { ResetPasswordUIProps } from "../../../types";
 import SmoothPulseSVG from "../../components/animation/smoothPulse";
 import { Alert, AlertTitle } from "../../components/ui/alert";
 import Policy from "../Policy";
@@ -170,7 +170,7 @@ const ResetPasswordView = ({ token }: ResetPasswordUIProps) => {
                   </Alert>
                 )}
                 {!!message && (
-                  <div className="w-96">
+                  <div className="w-full max-w-96">
                     <Alert className="bg-green-400/50 border-none">
                       <CircleCheckBig className="h-3 w-4 text-green-900" />
                       <AlertTitle className="text-wrap break-words">
