@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { UserType } from "../../types.ts";
 import { getUser } from "../lib/getUser";
 import Loader from "../modules/Loader";
 
 export default function Home() {
   const router = useRouter();
   // const { data: session, isPending } = authClient.useSession();
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

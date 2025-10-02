@@ -73,7 +73,7 @@ const ForgotPasswordView = () => {
             "If an account exists for this email, we've sent a password reset link."
           );
           setTimeout(() => {
-            router.push("/");
+            router.push("/sign-in");
           }, 3000);
         },
         onError: ({ error }) => {

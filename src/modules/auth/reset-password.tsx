@@ -188,7 +188,7 @@ const ResetPasswordView = ({ token }: ResetPasswordUIProps) => {
                   {pending ? (
                     <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
                   ) : null}
-                  Rest password
+                  Reset password
                 </Button>
               </div>
             </form>

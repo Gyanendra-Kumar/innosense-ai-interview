@@ -32,7 +32,7 @@ export const sendMail = async ({
   // const html = await render(Component);
 
   await transporter.sendMail({
-    from: `FynLance <${process.env.EMAIL_USER}>`,
+    from: `InnoSense AI <${process.env.EMAIL_USER}>`,
     to: `${userName}<${to}>`,
     subject,
     html,
