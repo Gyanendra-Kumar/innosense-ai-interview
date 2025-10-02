@@ -8,6 +8,7 @@ import { toast } from "sonner";
 
 import { User } from "../lib/auth";
 import { authClient } from "../lib/auth-client";
+
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -71,6 +72,7 @@ function SignOutItem() {
   async function handleSignOut() {
     // TODO: Handle sign out
     const { error } = await authClient.signOut();
+
     if (error) {
       toast.error(error.message ?? "Something went wrong");
     } else {

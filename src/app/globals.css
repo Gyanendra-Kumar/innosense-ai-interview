@@ -253,6 +253,10 @@
       var(--text-gradient-end)
     );
   }
+
+  .loader {
+    @apply w-13 h-13 border-7 border-b-amber-600 border-t-blue-600 border-r-cyan-600 border-l-emerald-600 border-dashed animate-spin rounded-full;
+  }
 }
 
 /* .text-gradient {

@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
+import { sendMail } from "./sendMail";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -8,6 +9,14 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    async sendResetPassword({ user, url }) {
+      await sendMail({
+        to: user.email,
+        userName: user.name,
+        subject: `Reset your password`,
+        html: `Click the link to reset your password: ${url}`,
+      });
+    },
   },
   socialProviders: {
     google: {
