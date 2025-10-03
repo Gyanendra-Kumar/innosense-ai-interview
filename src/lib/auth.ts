@@ -12,13 +12,14 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    resetPasswordExpiresIn: 60 * 30, // 30 minutes in seconds
     async sendResetPassword({ user, url }) {
       const html = await getResetPasswordEmail(user.name ?? "User", url);
 
       await sendMail({
         to: user.email,
         userName: user.name,
-        subject: `Reset your password`,
+        subject: `😓 Reset your password`,
         html,
       });
     },
@@ -38,12 +39,13 @@ export const auth = betterAuth({
   emailVerification: {
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
+    expiresIn: 60 * 60, // 1 hours in seconds
     async sendVerificationEmail({ user, url }) {
       const html = await verification(user.name ?? "User", url);
       await sendMail({
         to: user?.email,
         userName: user?.name,
-        subject: `Verify your email`,
+        subject: `🚨 Verify your email 🚓`,
         html,
       });
     },
