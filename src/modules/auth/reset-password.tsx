@@ -17,9 +17,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { ResetPasswordUIProps } from "../../../types";
 import SmoothPulseSVG from "../../components/animation/smoothPulse";
 import { Alert, AlertTitle } from "../../components/ui/alert";
+import { ResetPasswordUIProps } from "../../types";
 import Policy from "../Policy";
 
 const signUpFormSchema = z

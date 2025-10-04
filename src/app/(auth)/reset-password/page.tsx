@@ -1,5 +1,5 @@
-import { SearchParamsType } from "../../../../types";
 import ResetPasswordView from "../../../modules/auth/reset-password";
+import { SearchParamsType } from "../../../types";
 
 export const metadata = {
   title: "Reset Password",
