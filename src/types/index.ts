@@ -1,3 +1,5 @@
+import { LucideIcon } from "lucide-react";
+
 export interface UserType {
   id: string;
   createdAt: Date;
@@ -13,9 +15,15 @@ export interface TooltipType {
   content: string;
 }
 
-export interface SearchParamsType{
-  searchParams: Promise<{token:string}>
+export interface SearchParamsType {
+  searchParams: Promise<{ token: string }>;
 }
 export interface ResetPasswordUIProps {
   token: string;
+}
+
+export interface SidebarItem {
+  icon: LucideIcon; // any icon from lucide-react
+  label: string;
+  href: string;
 }

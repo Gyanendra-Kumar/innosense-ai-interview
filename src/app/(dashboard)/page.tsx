@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { getUser } from "../../lib/getUser";
+import Loader from "../../modules/Loader";
 import { UserType } from "../../types";
-import { getUser } from "../lib/getUser";
-import Loader from "../modules/Loader";
 
 export default function Home() {
   const router = useRouter();
-  // const { data: session, isPending } = authClient.useSession();
+
   const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -20,6 +20,7 @@ export default function Home() {
         const u = await getUser();
         if (mounted) setUser(u ?? null);
       } catch (e) {
+        console.error("Error fetching user:", e);
         if (mounted) setUser(null);
       } finally {
         if (mounted) setLoading(false);
