@@ -1,4 +1,4 @@
-import { UserType } from "../../types";
+import { UserType } from "../types";
 import { getSession } from "./getSession";
 
 export const getUser = async (): Promise<UserType | null> => {

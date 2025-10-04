@@ -3,20 +3,16 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { UserType } from "../../types";
-import { decrement, increment } from "../features/counterSlice";
 import { setUser } from "../features/userSlice";
 import { getUser } from "../lib/getUser";
 import { useAppDispatch, useAppSelector } from "../lib/store";
 import Loader from "../modules/Loader";
+import { UserType } from "../types";
 
 export default function Home() {
   const router = useRouter();
-  const { count, user } = useAppSelector((state) => ({
-    count: state.counter.value,
-    user: state.user.user,
-  }));
-  console.log("🚀 ~ page.tsx:19 ~ Home ~ user:", user);
+  const { user } = useAppSelector((state) => state.user);
+  // console.log("🚀 ~ page.tsx:19 ~ Home ~ user:", user);
 
   const dispatch = useAppDispatch();
 
@@ -26,13 +22,18 @@ export default function Home() {
     const fetchUser = async () => {
       try {
         const u = await getUser();
-        dispatch(
-          setUser({
-            ...u,
-            createdAt: u?.createdAt.toString(),
-            updatedAt: u?.updatedAt.toString(),
-          } as UserType)
-        );
+        if (u) {
+          dispatch(
+            setUser({
+              ...u,
+              createdAt: u?.createdAt.toString(),
+              updatedAt: u?.updatedAt.toString(),
+            } as UserType)
+          );
+          setLoading(false);
+        } else {
+          dispatch(setUser(null));
+        }
       } catch {
         dispatch(setUser(null)); // or dispatch(clearUser())
       } finally {
@@ -58,23 +59,6 @@ export default function Home() {
       <div className="flex flex-col gap-4 items-center justify-center min-h-screen">
         <Link href="/sign-in">Sign In</Link>
         <Link href="/sign-up">Sign Up</Link>
-        <div className="flex flex-col items-center gap-3 mt-10">
-          <h1 className="text-2xl font-bold">Counter: {count}</h1>
-          <div className="flex gap-2">
-            <button
-              onClick={() => dispatch(decrement())}
-              className="px-3 py-1 border rounded"
-            >
-              -
-            </button>
-            <button
-              onClick={() => dispatch(increment())}
-              className="px-3 py-1 border rounded"
-            >
-              +
-            </button>
-          </div>
-        </div>
       </div>
     );
   }

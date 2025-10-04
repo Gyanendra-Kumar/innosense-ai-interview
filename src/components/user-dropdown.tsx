@@ -68,7 +68,7 @@ function AdminItem() {
   );
 }
 
-function SignOutItem() {
+export function SignOutItem() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -92,8 +92,8 @@ function SignOutItem() {
   }
 
   return (
-    <DropdownMenuItem onClick={handleSignOut}>
+    <Button onClick={handleSignOut}>
       <LogOutIcon className="size-4" /> <span>Sign out</span>
-    </DropdownMenuItem>
+    </Button>
   );
 }
