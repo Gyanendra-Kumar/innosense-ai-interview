@@ -4,7 +4,7 @@ import { UserDropdown } from "@/components/user-dropdown";
 import { ThemeToggle } from "@/modules/theme/toggle-theme";
 import Image from "next/image";
 import Link from "next/link";
-import { UserType } from "../../../types";
+// import { UserType } from "../../../types";
 import IaTooltip from "../../components/Tooltip";
 import { useAppSelector } from "../../lib/store";
 

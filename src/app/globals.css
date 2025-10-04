@@ -15,7 +15,7 @@
   --popover-foreground: oklch(0.3 0.0358 30.2042);
 
   /* primary (e.g: button) */
-  --primary: oklch(0.63 0.1699 149.21);
+  --primary: oklch(0.5234 0.1347 144.1672);
   /* --primary: oklch(0.5234 0.1347 144.1672); */
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.9571 0.021 147.636);
@@ -49,20 +49,21 @@
   /* --sidebar: oklch(0.937 0.0142 74.4218); */
 
   /* Sidebar text color */
-  --sidebar-foreground: oklch(0.9423 0.0097 72.6595);
-  /* --sidebar-foreground: oklch(0.82 0.0057 182.99); */
+  /* --sidebar-foreground: oklch(0.3 0.0358 30.2042); */
+  --sidebar-foreground: oklch(0.82 0.0057 182.99);
   /* --sidebar-foreground: oklch(0.3 0.0358 30.2042); */
 
   --sidebar-primary: oklch(0.5234 0.1347 144.1672);
   --sidebar-primary-foreground: oklch(1 0 0);
 
   /* Sidebar active item background */
-  --sidebar-accent: oklch(0.5752 0.1446 144.1813);
+  --sidebar-accent: oklch(0.4254 0.1159 144.3078);
   /* --sidebar-accent: oklch(0.8952 0.0504 146.0366); */
 
   /* Sidebar active item text color */
-  --sidebar-accent-foreground: oklch(0.9423 0.0097 72.6595);
   /* --sidebar-accent-foreground: oklch(0.4254 0.1159 144.3078); */
+  --sidebar-accent-foreground: oklch(1 0 0);
+
   --sidebar-border: oklch(0.8805 0.0208 74.6428);
   --sidebar-ring: oklch(0.5234 0.1347 144.1672);
   --font-sans: Montserrat, sans-serif;
@@ -121,20 +122,25 @@
   --chart-5: oklch(0.5752 0.1446 144.1813);
   --radius: 0.5rem;
 
-  --sidebar: oklch(0.2 0.0283 172.92);
   /* --sidebar: oklch(0.2683 0.0279 150.7681); */
+  --sidebar: oklch(0.2 0.0283 172.92);
+  /* --sidebar: oklch(0.937 0.0142 74.4218); */
 
-  --sidebar-foreground: oklch(0.82 0.0057 182.99);
-  /* --sidebar-foreground: oklch(0.9423 0.0097 72.6595); */
+  /* Sidebar text color */
+  --sidebar-foreground: oklch(0.9423 0.0097 72.6595);
+  /* --sidebar-foreground: oklch(0.82 0.0057 182.99); */
+  /* --sidebar-foreground: oklch(0.3 0.0358 30.2042); */
 
-  --sidebar-primary: oklch(0.6731 0.1624 144.2083);
-  --sidebar-primary-foreground: oklch(0.2157 0.0453 145.7256);
+  --sidebar-primary: oklch(0.5234 0.1347 144.1672);
+  --sidebar-primary-foreground: oklch(1 0 0);
 
-  --sidebar-accent: oklch(0.34 0.0601 171.21);
-  /* --sidebar-accent: oklch(0.5752 0.1446 144.1813); */
+  /* Sidebar active item background */
+  --sidebar-accent: oklch(0.4254 0.1159 144.3078);
+  /* --sidebar-accent: oklch(0.8952 0.0504 146.0366); */
 
-  --sidebar-accent-foreground: oklch(1 0 0);
-  /* --sidebar-accent-foreground: oklch(0.9423 0.0097 72.6595); */
+  /* Sidebar active item text color */
+  --sidebar-accent-foreground: oklch(0.9423 0.0097 72.6595);
+  /* --sidebar-accent-foreground: oklch(0.4254 0.1159 144.3078); */
 
   --sidebar-border: oklch(0.3942 0.0265 142.9926);
   --sidebar-ring: oklch(0.6731 0.1624 144.2083);
@@ -161,59 +167,6 @@
   --shadow-xl:
     0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
   --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-    letter-spacing: var(--tracking-normal);
-  }
-}
-.sidebar-gradient {
-  background: var(--sidebar) !important; /* use full background */
-}
-
-@layer utilities {
-  .auth-layout {
-    @apply flex justify-center items-center min-h-screen;
-  }
-  .auth-link {
-    @apply relative font-medium after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-500 after:ease-in-out hover:after:w-full text-primary;
-  }
-  .text-gradient {
-    @apply text-2xl font-bold bg-clip-text text-transparent;
-    background-image: linear-gradient(
-      to right,
-      var(--text-gradient-start),
-      var(--text-gradient-via),
-      var(--text-gradient-end)
-    );
-  }
-
-  .loader {
-    @apply w-13 h-13 border-7 border-b-amber-600 border-t-blue-600 border-r-cyan-600 border-l-emerald-600 border-dashed animate-spin rounded-full;
-  }
-
-  .sidebar-button{
-    @apply h-10 hover:bg-linear-to-r/oklch border border-transparent hover:border-[#5D6B68]/10 from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50
-  }
-}
-
-.text-gradient-vertical {
-  --text-gradient-angle: 180deg;
-}
-
-.text-gradient-primary {
-  --text-gradient-start: var(--primary);
-  --text-gradient-end: var(--primary-foreground);
-}
-
-.text-gradient-accent {
-  --text-gradient-start: var(--accent);
-  --text-gradient-end: var(--secondary);
 }
 
 @theme inline {
@@ -279,4 +232,57 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    letter-spacing: var(--tracking-normal);
+  }
+}
+.sidebar-gradient {
+  background: var(--sidebar) !important; /* use full background */
+}
+
+@layer utilities {
+  .auth-layout {
+    @apply flex justify-center items-center min-h-screen;
+  }
+  .auth-link {
+    @apply relative font-medium after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-500 after:ease-in-out hover:after:w-full text-primary;
+  }
+  .text-gradient {
+    @apply text-2xl font-bold bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      to right,
+      var(--text-gradient-start),
+      var(--text-gradient-via),
+      var(--text-gradient-end)
+    );
+  }
+
+  .loader {
+    @apply w-13 h-13 border-7 border-b-amber-600 border-t-blue-600 border-r-cyan-600 border-l-emerald-600 border-dashed animate-spin rounded-full;
+  }
+
+  .sidebar-button {
+    @apply h-10 hover:bg-linear-to-r/oklch border border-transparent hover:border-[#5D6B68]/10 from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50;
+  }
+}
+
+.text-gradient-vertical {
+  --text-gradient-angle: 180deg;
+}
+
+.text-gradient-primary {
+  --text-gradient-start: var(--primary);
+  --text-gradient-end: var(--primary-foreground);
+}
+
+.text-gradient-accent {
+  --text-gradient-start: var(--accent);
+  --text-gradient-end: var(--secondary);
 }

@@ -3,7 +3,6 @@
 import { BotIcon, StarIcon, VideoIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Separator } from "../../../../components/ui/separator";
 import {
   Sidebar,
@@ -16,8 +15,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../../../../components/ui/sidebar";
+import { SignOutItem } from "../../../../components/user-dropdown";
 import { cn } from "../../../../lib/utils";
-import { SidebarItem, UserType } from "../../../../types";
+import { SidebarItem } from "../../../../types";
 import DashboardUserButton from "./dashboard.user.button";
 
 const firstSection: SidebarItem[] = [
@@ -40,8 +40,9 @@ const secondSection: SidebarItem[] = [
   },
 ];
 
-const DashboardSidebar = ({ user }: { user: UserType }) => {
-  const pathname = usePathname();
+const DashboardSidebar = () => {
+  // const pathname = usePathname();
+  const pathname = "/upgrade";
 
   const renderSidebarGroup = (sidebarItem: SidebarItem[]) => {
     return (
@@ -84,7 +85,7 @@ const DashboardSidebar = ({ user }: { user: UserType }) => {
             width={36}
             height={36}
           />
-          <p className="text-2xl font-semibold">InnoSense AI</p>
+          <p className="text-2xl font-semibold text-white">InnoSense AI</p>
         </Link>
       </SidebarHeader>
       <div className="px-4 py-2">
@@ -100,6 +101,7 @@ const DashboardSidebar = ({ user }: { user: UserType }) => {
         {renderSidebarGroup(secondSection)}
       </SidebarContent>
       <SidebarFooter>
+        <SignOutItem />
         <DashboardUserButton />
       </SidebarFooter>
     </Sidebar>

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { SidebarProvider, SidebarTrigger } from "../../components/ui/sidebar";
 import DashboardSidebar from "../../modules/dashboard/ui/components/dashboard.sidebar";
+import ProtectedLayout from "../../modules/dashboard/ui/components/ProtectedLayout";
 
 export const metadata: Metadata = {
   title: "InnoSense AI Interview - Practice Smarter with AI",
@@ -11,15 +12,17 @@ export const metadata: Metadata = {
   },
 };
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = async ({ children }: { children: React.ReactNode }) => {
   return (
-    <SidebarProvider>
-      <DashboardSidebar />
-      <main>
-        <SidebarTrigger />
-        {children}
-      </main>
-    </SidebarProvider>
+    <ProtectedLayout>
+      <SidebarProvider>
+        <DashboardSidebar />
+        <main>
+          <SidebarTrigger />
+          {children}
+        </main>
+      </SidebarProvider>
+    </ProtectedLayout>
   );
 };
 

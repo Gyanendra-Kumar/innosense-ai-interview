@@ -188,7 +188,13 @@ const SignInView = () => {
                     ) : null}
                     Sign In
                   </Button>
-                  <div className="flex justify-end w-full">
+                  <div className="flex justify-between w-full">
+                    <Link
+                      href="/"
+                      className="auth-link after:!h-[1px] text-xs mt-1"
+                    >
+                      Home
+                    </Link>
                     <Link
                       href="/forgot-password"
                       className="auth-link after:!h-[1px] text-xs mt-1"
