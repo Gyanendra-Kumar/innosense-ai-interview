@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import { User } from "../lib/auth";
 import { authClient } from "../lib/auth-client";
 
+import { clearUser } from "../features/userSlice";
+import { persistor, useAppDispatch } from "../lib/store";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -68,17 +70,25 @@ function AdminItem() {
 
 function SignOutItem() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   async function handleSignOut() {
-    // TODO: Handle sign out
     const { error } = await authClient.signOut();
 
     if (error) {
       toast.error(error.message ?? "Something went wrong");
-    } else {
-      toast.success("Signed out successfully.");
-      router.push("/sign-in");
+      return;
     }
+
+    // 1. Clear user state
+    dispatch(clearUser());
+
+    // 2. Clear persisted storage
+    await persistor.purge();
+
+    // 3. Navigate to sign-in
+    toast.success("Signed out successfully.");
+    router.push("/sign-in");
   }
 
   return (

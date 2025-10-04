@@ -1,7 +1,7 @@
 export interface UserType {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   email: string;
   emailVerified: boolean;
   name: string;
@@ -13,8 +13,8 @@ export interface TooltipType {
   content: string;
 }
 
-export interface SearchParamsType{
-  searchParams: Promise<{token:string}>
+export interface SearchParamsType {
+  searchParams: Promise<{ token: string }>;
 }
 export interface ResetPasswordUIProps {
   token: string;
