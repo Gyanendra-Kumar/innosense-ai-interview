@@ -36,6 +36,14 @@ export const auth = betterAuth({
       clientSecret: process.env.NEXT_GITHUB_CLIENT_SECRET as string,
     },
   },
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        input: false,
+      },
+    },
+  },
   emailVerification: {
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
@@ -63,6 +71,22 @@ export const auth = betterAuth({
     user: {
       create: {
         after: async (user) => {
+          // if (user) {
+          //   const baseSlug = user?.email
+          //     .split("@")[0]
+          //     .trim()
+          //     .toLowerCase()
+          //     .replace(/\s+/g, "-")
+          //     .replace(/[^a-z0-9-]/g, "");
+
+          //   await prisma.user.update({
+          //     where: { id: user?.id },
+          //     data: { slug: baseSlug },
+          //   });
+
+          //   user.slug = baseSlug;
+          // }
+
           const html = await getWelcomeEmail(user.name ?? "User");
 
           await sendMail({

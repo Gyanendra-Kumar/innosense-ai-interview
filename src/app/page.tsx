@@ -5,53 +5,63 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getUser } from "../lib/getUser";
 import Loader from "../modules/Loader";
-import { UserType } from "../types";
 
 export default function Home() {
   const router = useRouter();
-  const [user, setUser] = useState<UserType | null>(null);
-
   const [loading, setLoading] = useState(true);
+  const [userSlug, setUserSlug] = useState<string | null>();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const u = await getUser();
-        if (u) {
-          setUser(u);
-          setLoading(false);
-        } else {
-          setUser(null);
+        const user = await getUser();
+
+        if (!user) {
+          setLoading(false); // Not logged in → show landing page
+          return;
         }
-      } catch {
-        setUser(null);
-      } finally {
+
+        setUserSlug(user?.slug);
+        // router.push(`/${user.slug}`);
+      } catch (err) {
+        console.error("🚀 fetchUser error:", err);
         setLoading(false);
       }
     };
 
     fetchUser();
-  }, []);
-  // Redirect after render
+  }, [router]);
+
   useEffect(() => {
-    if (!loading && user) {
-      router.push("/main");
+    if (userSlug) {
+      router.push(`${userSlug}`);
     }
-  }, [loading, user, router]);
+  }, [userSlug]);
 
-  if (loading) {
-    return <Loader />;
-  }
+  if (loading) return <Loader />;
 
-  if (!user) {
-    return (
-      <div className="flex flex-col gap-4 items-center justify-center min-h-screen">
-        <Link href="/sign-in">Sign In</Link>
-        <Link href="/sign-up">Sign Up</Link>
+  // Landing page for guests
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4 p-4">
+      <h1 className="text-3xl font-bold">Welcome to InnoSense AI Interview</h1>
+      <p className="text-center max-w-md">
+        Schedule AI-powered mock interviews, get real-time feedback, and prepare
+        with confidence.
+      </p>
+      <div className="flex gap-4 mt-6">
+        <Link
+          href="/sign-in"
+          className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Sign In
+        </Link>
+        <Link
+          href="/sign-up"
+          className="px-6 py-2 border border-blue-600 text-blue-600 rounded hover:bg-blue-50"
+        >
+          Sign Up
+        </Link>
       </div>
-    );
-  }
-
-  // Optional: render nothing while redirecting
-  return <Loader />;
+    </div>
+  );
 }

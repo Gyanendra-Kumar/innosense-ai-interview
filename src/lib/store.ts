@@ -12,10 +12,11 @@ import {
 } from "redux-persist";
 // import storage from "redux-persist/lib/storage";
 import storageSession from "redux-persist/lib/storage/session";
+import userReducer from "../features/userSlice";
 
 // 🔹 Combine all slices
 const rootReducer = combineReducers({
-  // user: userReducer,
+  user: userReducer,
 });
 
 // 🔹 Persist config

@@ -1,13 +1,15 @@
 import { LucideIcon } from "lucide-react";
 
 export interface UserType {
+  name: string;
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
   email: string;
   emailVerified: boolean;
-  name: string;
-  image?: string | null | undefined;
+  role: string | null;
+  slug: string | null;
+  image: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface TooltipType {
