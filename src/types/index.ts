@@ -2,8 +2,8 @@ import { LucideIcon } from "lucide-react";
 
 export interface UserType {
   id: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   email: string;
   emailVerified: boolean;
   name: string;

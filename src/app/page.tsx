@@ -3,18 +3,13 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { setUser } from "../features/userSlice";
 import { getUser } from "../lib/getUser";
-import { useAppDispatch, useAppSelector } from "../lib/store";
 import Loader from "../modules/Loader";
 import { UserType } from "../types";
 
 export default function Home() {
   const router = useRouter();
-  const { user } = useAppSelector((state) => state.user);
-  // console.log("🚀 ~ page.tsx:19 ~ Home ~ user:", user);
-
-  const dispatch = useAppDispatch();
+  const [user, setUser] = useState<UserType | null>(null);
 
   const [loading, setLoading] = useState(true);
 
@@ -23,26 +18,20 @@ export default function Home() {
       try {
         const u = await getUser();
         if (u) {
-          dispatch(
-            setUser({
-              ...u,
-              createdAt: u?.createdAt.toString(),
-              updatedAt: u?.updatedAt.toString(),
-            } as UserType)
-          );
+          setUser(u);
           setLoading(false);
         } else {
-          dispatch(setUser(null));
+          setUser(null);
         }
       } catch {
-        dispatch(setUser(null)); // or dispatch(clearUser())
+        setUser(null);
       } finally {
         setLoading(false);
       }
     };
 
     fetchUser();
-  }, [dispatch]);
+  }, []);
   // Redirect after render
   useEffect(() => {
     if (!loading && user) {

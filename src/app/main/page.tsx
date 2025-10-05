@@ -1,10 +1,8 @@
-"use client";
-
 import { redirect } from "next/navigation";
-import { useAppSelector } from "../../lib/store";
+import { getUser } from "../../lib/getUser";
 
-const MainPage = () => {
-  const { user } = useAppSelector((state) => state.user);
+const MainPage = async () => {
+  const user = await getUser();
 
   if (!user) {
     redirect("/sign-in");
@@ -14,7 +12,7 @@ const MainPage = () => {
     <main>
       <h1>User Name: {user?.name}</h1>
       <p>User Email:{user?.email}</p>
-      <p>created At: {user?.createdAt}</p>
+      <p>created At: {user?.createdAt.toString()}</p>
     </main>
   );
 };

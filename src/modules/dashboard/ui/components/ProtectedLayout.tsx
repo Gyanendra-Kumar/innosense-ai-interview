@@ -13,7 +13,7 @@ export default async function ProtectedLayout({
   const session = await getSession(); // replace with your auth check
 
   if (!session?.user) {
-    console.log("tried user forced entry");
+    // console.log("tried user forced entry");
     redirect("/sign-in"); // server-side redirect
   }
 

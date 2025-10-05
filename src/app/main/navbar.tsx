@@ -1,15 +1,13 @@
-"use client"
-
 import { UserDropdown } from "@/components/user-dropdown";
 import { ThemeToggle } from "@/modules/theme/toggle-theme";
 import Image from "next/image";
 import Link from "next/link";
 // import { UserType } from "../../../types";
 import IaTooltip from "../../components/Tooltip";
-import { useAppSelector } from "../../lib/store";
+import { getUser } from "../../lib/getUser";
 
-export  function Navbar() {
-  const user = useAppSelector((state) => state.user.user);
+export async function Navbar() {
+  const user = await getUser();
   if (!user) return null;
 
   return (
