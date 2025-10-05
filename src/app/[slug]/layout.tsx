@@ -14,15 +14,13 @@ export const metadata: Metadata = {
 };
 
 interface PageProps {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>;
   children: React.ReactNode;
 }
 
 const DashboardLayout = async ({ children, params }: PageProps) => {
   const slug = await params;
-  // console.log("🚀 ~ layout.tsx:25 ~ DashboardLayout ~ slug:", slug);
+  console.log("🚀 ~ layout.tsx:25 ~ DashboardLayout ~ slug:", slug);
   return (
     <ProtectedLayout params={slug}>
       <SidebarProvider>
