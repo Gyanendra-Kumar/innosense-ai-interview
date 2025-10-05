@@ -6,9 +6,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { User } from "../lib/auth";
 import { authClient } from "../lib/auth-client";
 
+import { UserType } from "../types";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -19,7 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-type UserProps = Readonly<{ user: User }>;
+type UserProps = Readonly<{ user: UserType }>;
 
 export function UserDropdown({ user }: UserProps) {
   return (
