@@ -20,9 +20,11 @@ interface PageProps {
   children: React.ReactNode;
 }
 
-const DashboardLayout = ({ children, params }: PageProps) => {
+const DashboardLayout = async ({ children, params }: PageProps) => {
+  const slug = await params;
+  // console.log("🚀 ~ layout.tsx:25 ~ DashboardLayout ~ slug:", slug);
   return (
-    <ProtectedLayout params={params}>
+    <ProtectedLayout params={slug}>
       <SidebarProvider>
         <DashboardSidebar />
         <main>
