@@ -84,7 +84,9 @@ const DashboardSidebar = () => {
             width={36}
             height={36}
           />
-          <p className="text-2xl font-semibold text-white">InnoSense AI</p>
+          <p className="text-2xl font-semibold text-slate-700 dark:text-slate-200">
+            InnoSense AI
+          </p>
         </Link>
       </SidebarHeader>
       <div className="px-4 py-2">

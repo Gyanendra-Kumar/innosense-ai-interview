@@ -17,10 +17,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import SmoothPulseSVG from "../../components/animation/smoothPulse";
 import { Alert, AlertTitle } from "../../components/ui/alert";
 import { ResetPasswordUIProps } from "../../types";
 import Policy from "../Policy";
+import AuthSidebar from "./auth-sidebar";
 
 const signUpFormSchema = z
   .object({
@@ -110,18 +110,12 @@ const ResetPasswordView = ({ token }: ResetPasswordUIProps) => {
       <Card className="bg-card shadow-lg overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
           {/* LEFT SECTION */}
-          <div className="auth-side-label">
-            {/* Logo */}
-            <SmoothPulseSVG />
-            <p className="text-2xl font-semibold text-white whitespace-nowrap">
-              InnoSense AI Interview
-            </p>
-          </div>
+          <AuthSidebar />
 
           {/* RIGHT SECTION */}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-8">
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col justify-center h-full gap-6">
                 <div className="flex flex-col items-center text-center gap-2">
                   <h1 className="text-2xl font-bold">Reset your password</h1>
                   <p className="text-primary text-balance">
