@@ -15,7 +15,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../../../../components/ui/sidebar";
-import { SignOutItem } from "../../../../components/user-dropdown";
 import { cn } from "../../../../lib/utils";
 import { SidebarItem } from "../../../../types";
 import DashboardUserButton from "./dashboard.user.button";
@@ -101,7 +100,6 @@ const DashboardSidebar = () => {
         {renderSidebarGroup(secondSection)}
       </SidebarContent>
       <SidebarFooter>
-        <SignOutItem />
         <DashboardUserButton />
       </SidebarFooter>
     </Sidebar>

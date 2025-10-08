@@ -89,7 +89,7 @@ const ForgotPasswordView = () => {
       <Card className="bg-card shadow-lg overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
           {/* LEFT SECTION */}
-          <div className="bg-gradient-to-br from-green-700 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
+          <div className="auth-side-label">
             {/* Logo */}
             <SmoothPulseSVG />
             <p className="text-2xl font-semibold text-white whitespace-nowrap">

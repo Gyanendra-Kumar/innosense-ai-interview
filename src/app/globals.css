@@ -271,6 +271,9 @@
   .sidebar-button {
     @apply h-10 hover:bg-linear-to-r/oklch border border-transparent hover:border-[#5D6B68]/10 from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50;
   }
+  .auth-side-label {
+    @apply bg-radial from-sidebar-accent to-sidebar relative hidden md:flex flex-col gap-y-4 items-center justify-center;
+  }
 }
 
 .text-gradient-vertical {

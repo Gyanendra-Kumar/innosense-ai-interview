@@ -1,11 +1,38 @@
-import { ChevronRight } from "lucide-react";
+"use client";
+
+import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
+import {
+  ChevronRight,
+  CreditCardIcon,
+  LogOutIcon,
+  Mail,
+  UserCircle2Icon,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 import Dropdown from "../../../../components/dropdown.component";
 import GenerateAvatar from "../../../../components/generate-avatar";
 import { Avatar, AvatarImage } from "../../../../components/ui/avatar";
+import {
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "../../../../components/ui/dropdown-menu";
 import { authClient } from "../../../../lib/auth-client";
 
+const dropdownItems: { label: String; icon: React.ElementType }[] = [
+  {
+    label: "Billing",
+    icon: CreditCardIcon,
+  },
+  {
+    label: "Logout",
+    icon: LogOutIcon,
+  },
+];
+
 const DashboardUserButton = () => {
+  const router = useRouter();
   const { data, isPending } = authClient.useSession();
   const [open, setOpen] = useState<boolean>(false);
 
@@ -46,15 +73,45 @@ const DashboardUserButton = () => {
     </button>
   );
 
+  function handleSignOut() {
+    authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          toast.success("Signed out successfully.");
+          router.push("/sign-in");
+        },
+        onError: () => {
+          toast.error("Something went wrong");
+        },
+      },
+    });
+  }
+
   return (
     <div>
       <Dropdown trigger={dropdownTrigger()} onOpenChange={setOpen}>
-        <div className="flex flex-col gap-1">
-          <span className="font-medium truncate">{name}</span>
-          <span className="text-sm font-normal text-muted-foreground truncate">
-            {email}
-          </span>
-        </div>
+        <DropdownMenuLabel>
+          <div className="flex flex-col gap-1.5 p-2">
+            <span className="font-medium truncate flex items-center gap-1.5">
+              <UserCircle2Icon size={16} /> {name}
+            </span>
+            <span className="text-sm font-normal text-muted-foreground truncate flex items-center gap-1.5">
+              <Mail size={16} /> {email}
+            </span>
+          </div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {dropdownItems.map((item, index) => {
+          return (
+            <DropdownMenuItem
+              key={index}
+              className="cursor-pointer flex items-center justify-between"
+              onClick={index === 1 ? handleSignOut : undefined}
+            >
+              {item.label} <item.icon className="size-4" />
+            </DropdownMenuItem>
+          );
+        })}
       </Dropdown>
     </div>
   );
