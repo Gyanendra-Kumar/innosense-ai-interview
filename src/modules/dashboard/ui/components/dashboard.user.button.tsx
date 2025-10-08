@@ -19,6 +19,7 @@ import {
   DropdownMenuSeparator,
 } from "../../../../components/ui/dropdown-menu";
 import { authClient } from "../../../../lib/auth-client";
+import { ThemeToggle } from "../../../theme/toggle-theme";
 
 const dropdownItems: { label: String; icon: React.ElementType }[] = [
   {
@@ -98,6 +99,9 @@ const DashboardUserButton = () => {
             <span className="text-sm font-normal text-muted-foreground truncate flex items-center gap-1.5">
               <Mail size={16} /> {email}
             </span>
+            <div className="mt-1">
+              <ThemeToggle />
+            </div>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

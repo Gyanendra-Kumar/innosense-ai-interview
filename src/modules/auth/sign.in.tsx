@@ -18,9 +18,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import SmoothPulseSVG from "../../components/animation/smoothPulse";
 import { Alert, AlertTitle } from "../../components/ui/alert";
 import Policy from "../Policy";
+import AuthSidebar from "./auth-sidebar";
 
 const loginFormSchema = z.object({
   email: z.string().email("Please enter your email"),
@@ -127,6 +127,7 @@ const SignInView = () => {
     <section className="flex flex-col gap-6">
       <Card className="bg-card shadow-lg overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
+          {/* left content */}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-8">
               <div className="flex flex-col gap-6">
@@ -248,13 +249,8 @@ const SignInView = () => {
             </form>
           </Form>
 
-          <div className="auth-side-label">
-            {/* Logo */}
-            <SmoothPulseSVG />
-            <p className="text-2xl font-semibold text-white whitespace-nowrap">
-              InnoSense AI Interview
-            </p>
-        </div>
+          {/* Right content */}
+          <AuthSidebar />
         </CardContent>
       </Card>
       <Policy />
