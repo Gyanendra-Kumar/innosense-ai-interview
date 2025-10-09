@@ -24,7 +24,7 @@ const Dropdown = ({
     <DropdownMenu onOpenChange={onOpenChange}>
       <DropdownMenuTrigger
         className={cn(
-          "rounded-lg border border-border/10 p-3 w-full flex items-center justify-between bg-white/10 cursor-pointer",
+          "rounded-lg border border-border/10 p-3 w-full flex items-center justify-between bg-slate-100 dark:bg-black/50 cursor-pointer",
           triggerClassName
         )}
         asChild

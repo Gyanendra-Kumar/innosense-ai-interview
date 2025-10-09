@@ -3,6 +3,7 @@
 import { BotIcon, StarIcon, VideoIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Separator } from "../../../../components/ui/separator";
 import {
   Sidebar,
@@ -15,7 +16,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../../../../components/ui/sidebar";
-import { cn } from "../../../../lib/utils";
 import { SidebarItem } from "../../../../types";
 import DashboardUserButton from "./dashboard.user.button";
 
@@ -40,34 +40,36 @@ const secondSection: SidebarItem[] = [
 ];
 
 const DashboardSidebar = () => {
-  // const pathname = usePathname();
-  const pathname = "/upgrade";
+  const pathname = usePathname();
+  const slug = pathname.split("/")[1];
 
   const renderSidebarGroup = (sidebarItem: SidebarItem[]) => {
     return (
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
-            {sidebarItem.map((item) => (
-              <SidebarMenuItem key={item.href}>
-                <SidebarMenuButton
-                  asChild
-                  className={cn(
-                    "sidebar-button",
-                    pathname === item.href &&
-                      "bg-linear-to-r/oklch border-[#5D6B68]/10"
-                  )}
-                  isActive={pathname === item.href}
-                >
-                  <Link href={item.href}>
-                    <item.icon className="h-5 w-5" />
-                    <span className="text-sm font-medium tracking-tight">
-                      {item.label}
-                    </span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
+            {sidebarItem.map((item) => {
+              const active = pathname === item.href;
+              const fullHref = `/${slug}${item.href}`;
+
+              return (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton
+                    asChild
+                    className={`flex items-center gap-2 px-3 pt-2 rounded-md transition-colors ${active ? "bg-slate-200 text-slate-900 dark:bg-slate-700 dark:text-slate-100" : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 hover:dark:bg-slate-500"}`}
+                    // border-[#5D6B68]/10
+                    isActive={pathname === item.href}
+                  >
+                    <Link href={fullHref}>
+                      <item.icon className="h-5 w-5" />
+                      <span className="text-sm font-medium tracking-tight">
+                        {item.label}
+                      </span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
@@ -77,7 +79,7 @@ const DashboardSidebar = () => {
   return (
     <Sidebar>
       <SidebarHeader className="text-sidebar-accent-foreground">
-        <Link href="/" className="flex gap-2 items-center px-2 pt-2">
+        <Link href={`/${slug}`} className="flex gap-2 items-center px-2 pt-2">
           <Image
             src="/loading.svg"
             alt="InnoSense AI Interview logo"

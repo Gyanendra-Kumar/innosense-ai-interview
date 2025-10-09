@@ -25,7 +25,7 @@ const DashboardLayout = async ({ children, params }: PageProps) => {
     <ProtectedLayout params={slug}>
       <SidebarProvider>
         <DashboardSidebar />
-        <main>
+        <main className="">
           <SidebarTrigger />
           {children}
         </main>
