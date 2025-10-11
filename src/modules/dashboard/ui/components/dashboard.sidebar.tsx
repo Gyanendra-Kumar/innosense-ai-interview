@@ -49,20 +49,23 @@ const DashboardSidebar = () => {
         <SidebarGroupContent>
           <SidebarMenu>
             {sidebarItem.map((item) => {
-              const active = pathname === item.href;
               const fullHref = `/${slug}${item.href}`;
+              const active = pathname === fullHref;
 
               return (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
                     asChild
-                    className={`flex items-center gap-2 px-3 pt-2 rounded-md transition-colors ${active ? "bg-slate-200 text-slate-900 dark:bg-slate-700 dark:text-slate-100" : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 hover:dark:bg-slate-500"}`}
-                    // border-[#5D6B68]/10
-                    isActive={pathname === item.href}
+                    className={`flex items-center gap-2 px-3 pt-2 rounded-md transition-colors duration-200 font-medium
+    ${
+      active
+        ? "bg-[var(--color-primary)] text-white"
+        : "hover:bg-[var(--color-primary)] hover:text-white"
+    }`}
                   >
                     <Link href={fullHref}>
                       <item.icon className="h-5 w-5" />
-                      <span className="text-sm font-medium tracking-tight">
+                      <span className="text-sm tracking-tight">
                         {item.label}
                       </span>
                     </Link>
@@ -77,7 +80,7 @@ const DashboardSidebar = () => {
   };
 
   return (
-    <Sidebar>
+    <Sidebar className="m-2 min-h-[calc(100vh - 3rem)] shadow-2xl rounded-2xl">
       <SidebarHeader className="text-sidebar-accent-foreground">
         <Link href={`/${slug}`} className="flex gap-2 items-center px-2 pt-2">
           <Image

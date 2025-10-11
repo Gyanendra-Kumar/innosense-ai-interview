@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { cn } from "../lib/utils";
 import {
   DropdownMenu,
@@ -20,11 +23,21 @@ const Dropdown = ({
   overflowSide?: "right" | "left" | "top" | "bottom";
   onOpenChange?: (open: boolean) => void;
 }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <DropdownMenu onOpenChange={onOpenChange}>
       <DropdownMenuTrigger
         className={cn(
-          "rounded-lg border border-border/10 p-3 w-full flex items-center justify-between bg-slate-100 dark:bg-black/50 cursor-pointer",
+          "rounded-lg border border-border/10 p-3 w-full flex items-center justify-between bg-slate-200 dark:bg-black/50 cursor-pointer",
           triggerClassName
         )}
         asChild
@@ -33,7 +46,7 @@ const Dropdown = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align={alignOverlay}
-        side={overflowSide}
+        side={isMobile ? "top" : overflowSide}
         className="w-72"
       >
         {children}
