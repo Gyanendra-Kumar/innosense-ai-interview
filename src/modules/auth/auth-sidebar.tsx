@@ -3,7 +3,7 @@ import SmoothPulseSVG from "../../components/animation/smoothPulse";
 
 const AuthSidebar = () => {
   return (
-    <div className="relative flex items-center justify-center min-h-[460px]">
+    <div className="hidden relative md:flex items-center justify-center min-h-[460px]">
       <Image
         src="/login-image.jpeg"
         alt="Login"

@@ -19,7 +19,6 @@ import {
   DropdownMenuSeparator,
 } from "../../../../components/ui/dropdown-menu";
 import { authClient } from "../../../../lib/auth-client";
-import { ThemeToggle } from "../../../theme/toggle-theme";
 
 const dropdownItems: { label: String; icon: React.ElementType }[] = [
   {
@@ -89,8 +88,8 @@ const DashboardUserButton = () => {
   }
 
   return (
-    <div>
-      <Dropdown trigger={dropdownTrigger()} onOpenChange={setOpen}>
+    <div className="">
+      <Dropdown trigger={dropdownTrigger()} onOpenChange={setOpen} >
         <DropdownMenuLabel>
           <div className="flex flex-col gap-1.5 p-2">
             <span className="font-medium truncate flex items-center gap-1.5">
@@ -99,9 +98,11 @@ const DashboardUserButton = () => {
             <span className="text-sm font-normal text-muted-foreground truncate flex items-center gap-1.5">
               <Mail size={16} /> {email}
             </span>
-            <div className="mt-1">
+
+            {/* Toggle theme */}
+            {/* <div className="mt-1">
               <ThemeToggle />
-            </div>
+            </div> */}
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

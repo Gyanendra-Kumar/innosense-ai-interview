@@ -20,7 +20,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      {/* <body className="bg-gradient-to-bl from-[#F6FAF9] from-30% via-[#E8F0EE] via-80% to-[#E3E8E7]"> */}
+      <body className="bg-[#F2F3F5]">
         <Providers>
           <ThemeProvider
             attribute="class"

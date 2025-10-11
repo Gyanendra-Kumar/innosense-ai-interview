@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import React from "react";
-import { SidebarProvider, SidebarTrigger } from "../../components/ui/sidebar";
+import { SidebarProvider } from "../../components/ui/sidebar";
 import DashboardSidebar from "../../modules/dashboard/ui/components/dashboard.sidebar";
 import ProtectedLayout from "../../modules/dashboard/ui/components/ProtectedLayout";
+import Main from "./(sidebar-items)/main";
 
 export const metadata: Metadata = {
   title: "Dashboard | InnoSense AI Interview",
@@ -25,9 +26,8 @@ const DashboardLayout = async ({ children, params }: PageProps) => {
     <ProtectedLayout params={slug}>
       <SidebarProvider>
         <DashboardSidebar />
-        <main className="">
-          <SidebarTrigger />
-          {children}
+        <main className="p-2">
+          <Main>{children}</Main>
         </main>
       </SidebarProvider>
     </ProtectedLayout>
