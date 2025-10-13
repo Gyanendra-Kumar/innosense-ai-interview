@@ -34,7 +34,7 @@ const Dropdown = ({
       <DropdownMenuContent
         align={alignOverlay}
         side={overflowSide}
-        className="w-72"
+        className="lg:w-72"
       >
         {children}
       </DropdownMenuContent>

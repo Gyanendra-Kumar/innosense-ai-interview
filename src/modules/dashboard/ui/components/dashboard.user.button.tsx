@@ -18,6 +18,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "../../../../components/ui/dropdown-menu";
+import { useSidebar } from "../../../../components/ui/sidebar";
 import { authClient } from "../../../../lib/auth-client";
 import { ThemeToggle } from "../../../theme/toggle-theme";
 
@@ -36,6 +37,7 @@ const DashboardUserButton = () => {
   const router = useRouter();
   const { data, isPending } = authClient.useSession();
   const [open, setOpen] = useState<boolean>(false);
+  const { isMobile } = useSidebar();
 
   if (isPending || !data?.user) {
     return null;
@@ -89,8 +91,12 @@ const DashboardUserButton = () => {
   }
 
   return (
-    <div>
-      <Dropdown trigger={dropdownTrigger()} onOpenChange={setOpen}>
+    <div className="">
+      <Dropdown
+        trigger={dropdownTrigger()}
+        onOpenChange={setOpen}
+        overflowSide={isMobile ? "top" : "right"}
+      >
         <DropdownMenuLabel>
           <div className="flex flex-col gap-1.5 p-2">
             <span className="font-medium truncate flex items-center gap-1.5">

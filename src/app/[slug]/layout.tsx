@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import React from "react";
-import { SidebarProvider, SidebarTrigger } from "../../components/ui/sidebar";
+import { SidebarProvider } from "../../components/ui/sidebar";
+import DashboardNavbar from "../../modules/dashboard/ui/components/dashboard.navbar";
 import DashboardSidebar from "../../modules/dashboard/ui/components/dashboard.sidebar";
 import ProtectedLayout from "../../modules/dashboard/ui/components/ProtectedLayout";
 
@@ -25,8 +26,9 @@ const DashboardLayout = async ({ children, params }: PageProps) => {
     <ProtectedLayout params={slug}>
       <SidebarProvider>
         <DashboardSidebar />
-        <main className="">
-          <SidebarTrigger />
+        <main className="w-full">
+          {/* <SidebarTrigger /> */}
+          <DashboardNavbar />
           {children}
         </main>
       </SidebarProvider>
