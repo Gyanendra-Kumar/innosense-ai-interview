@@ -14,11 +14,6 @@ export default async function ProtectedLayout({
   children,
   params,
 }: ProtectedLayoutProps) {
-  // console.log(
-  //   "🚀 ~ ProtectedLayout.tsx:17 ~ ProtectedLayout ~ params:",
-  //   params
-  // );
-
   const slug = params;
   const user = await getUser(); // get logged-in user
 
