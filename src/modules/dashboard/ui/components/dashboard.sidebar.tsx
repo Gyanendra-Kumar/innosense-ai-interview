@@ -58,7 +58,7 @@ const DashboardSidebar = () => {
                     asChild
                     className={`flex items-center gap-2 px-3 pt-2 rounded-md transition-colors ${active ? "bg-slate-200 text-slate-900 dark:bg-slate-700 dark:text-slate-100" : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 hover:dark:bg-slate-500"}`}
                     // border-[#5D6B68]/10
-                    isActive={pathname === item.href}
+                    isActive={pathname === fullHref}
                   >
                     <Link href={fullHref}>
                       <item.icon className="h-5 w-5" />
@@ -77,7 +77,7 @@ const DashboardSidebar = () => {
   };
 
   return (
-    <Sidebar>
+    <Sidebar className="shadow-xl">
       <SidebarHeader className="text-sidebar-accent-foreground">
         <Link href={`/${slug}`} className="flex gap-2 items-center px-2 pt-2">
           <Image

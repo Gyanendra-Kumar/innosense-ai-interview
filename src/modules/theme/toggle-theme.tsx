@@ -9,7 +9,7 @@ export function ThemeToggle() {
   const isDark = theme === "dark";
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center gap-2 md:justify-between">
       <p className="text-sm">{isDark ? "Dark Theme" : "Light Theme"}</p>
       <button
         onClick={() => setTheme(isDark ? "light" : "dark")}

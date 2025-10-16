@@ -17,6 +17,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 import z from "zod";
 import { Alert, AlertTitle } from "../../components/ui/alert";
 import Policy from "../Policy";
@@ -223,6 +225,9 @@ const SignInView = () => {
                     {pendingGoogle ? (
                       <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
                     ) : null}
+                    <span>
+                      <FcGoogle />
+                    </span>{" "}
                     Google
                   </Button>
                   <Button
@@ -235,6 +240,9 @@ const SignInView = () => {
                     {pendingGithub ? (
                       <svg className="border-3 border-dashed size-4 animate-spin rounded-full" />
                     ) : null}
+                    <span>
+                      <FaGithub />
+                    </span>{" "}
                     GitHub
                   </Button>
                 </div>

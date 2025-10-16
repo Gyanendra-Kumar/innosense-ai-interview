@@ -14,11 +14,23 @@ import { toast } from "sonner";
 import Dropdown from "../../../../components/dropdown.component";
 import GenerateAvatar from "../../../../components/generate-avatar";
 import { Avatar, AvatarImage } from "../../../../components/ui/avatar";
+import { Button } from "../../../../components/ui/button";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../../../../components/ui/drawer";
 import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "../../../../components/ui/dropdown-menu";
+import { useIsMobile } from "../../../../hooks/use-mobile";
 import { authClient } from "../../../../lib/auth-client";
+import { cn } from "../../../../lib/utils";
 import { ThemeToggle } from "../../../theme/toggle-theme";
 
 const dropdownItems: { label: String; icon: React.ElementType }[] = [
@@ -36,6 +48,7 @@ const DashboardUserButton = () => {
   const router = useRouter();
   const { data, isPending } = authClient.useSession();
   const [open, setOpen] = useState<boolean>(false);
+  const isMobile = useIsMobile();
 
   if (isPending || !data?.user) {
     return null;
@@ -73,24 +86,9 @@ const DashboardUserButton = () => {
       />
     </button>
   );
-
-  function handleSignOut() {
-    authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          toast.success("Signed out successfully.");
-          router.push("/sign-in");
-        },
-        onError: () => {
-          toast.error("Something went wrong");
-        },
-      },
-    });
-  }
-
-  return (
-    <div>
-      <Dropdown trigger={dropdownTrigger()} onOpenChange={setOpen}>
+  const dropdownContent = () => {
+    return (
+      <>
         <DropdownMenuLabel>
           <div className="flex flex-col gap-1.5 p-2">
             <span className="font-medium truncate flex items-center gap-1.5">
@@ -116,6 +114,65 @@ const DashboardUserButton = () => {
             </DropdownMenuItem>
           );
         })}
+      </>
+    );
+  };
+
+  function handleSignOut() {
+    authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          toast.success("Signed out successfully.");
+          router.push("/sign-in");
+        },
+        onError: () => {
+          toast.error("Something went wrong");
+        },
+      },
+    });
+  }
+
+  if (isMobile) {
+    return (
+      <Drawer>
+        <DrawerTrigger
+          className={cn(
+            "rounded-lg border border-border/10 p-3 w-full flex items-center justify-between bg-slate-100 dark:bg-black/50 cursor-pointer"
+          )}
+          asChild
+        >
+          {dropdownTrigger()}
+        </DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader className="space-y-2">
+            <div className="flex justify-between items-center">
+              <DrawerTitle>{name}</DrawerTitle>
+              <ThemeToggle />
+            </div>
+            <DrawerDescription className="flex">{email}</DrawerDescription>
+          </DrawerHeader>
+          <DrawerFooter>
+            {dropdownItems.map((item, index) => {
+              return (
+                <Button
+                  key={index}
+                  className="cursor-pointer flex items-center gap-2"
+                  onClick={index === 1 ? handleSignOut : undefined}
+                >
+                  {item.label} <item.icon className="size-4" />
+                </Button>
+              );
+            })}
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    );
+  }
+
+  return (
+    <div className="">
+      <Dropdown trigger={dropdownTrigger()} onOpenChange={setOpen}>
+        {dropdownContent()}
       </Dropdown>
     </div>
   );
