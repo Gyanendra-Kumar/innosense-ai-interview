@@ -84,9 +84,14 @@ const SignInView = () => {
         rememberMe: false,
       },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
           setPendingEmail(false);
-          router.push("/");
+          const user = await fetch("/api/me").then((res) => res.json());
+          if (user?.slug) {
+            router.push(`/${user.slug}`);
+          } else {
+            router.push("/");
+          }
         },
         onError: ({ error }) => {
           setPendingEmail(false);
@@ -107,10 +112,15 @@ const SignInView = () => {
           provider,
         },
         {
-          onSuccess: () => {
+          onSuccess: async () => {
             if (provider === "google") setPendingGoogle(false);
             if (provider === "github") setPendingGithub(false);
-            router.push("/");
+            const user = await fetch("/api/me").then((res) => res.json());
+            if (user?.slug) {
+              router.push(`/${user.slug}`);
+            } else {
+              router.push("/");
+            }
           },
           onError: ({ error }) => {
             if (provider === "google") setPendingGoogle(false);
