@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { OctagonAlertIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -64,6 +64,7 @@ const SignInView = () => {
   const [pendingEmail, setPendingEmail] = useState(false);
   const [pendingGoogle, setPendingGoogle] = useState(false);
   const [pendingGithub, setPendingGithub] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<loginFormType>({
     resolver: zodResolver(loginFormSchema),
@@ -86,12 +87,14 @@ const SignInView = () => {
       {
         onSuccess: async () => {
           setPendingEmail(false);
-          const user = await fetch("/api/me").then((res) => res.json());
-          if (user?.slug) {
-            router.push(`/${user.slug}`);
-          } else {
-            router.push("/");
-          }
+          startTransition(async () => {
+            const user = await fetch("/api/me").then((res) => res.json());
+            if (user?.slug) {
+              router.push(`/${user.slug}`);
+            } else {
+              router.push("/");
+            }
+          });
         },
         onError: ({ error }) => {
           setPendingEmail(false);
