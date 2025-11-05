@@ -4,6 +4,7 @@ import {
   CommandDialog,
   CommandInput,
   CommandItem,
+  CommandResponsiveDialog,
 } from "../../../../components/ui/command";
 
 interface PropsType {
@@ -13,12 +14,12 @@ interface PropsType {
 
 const DashboardCommand = ({ open, setOpen }: PropsType) => {
   return (
-    <CommandDialog open={open} onOpenChange={setOpen}>
+    <CommandResponsiveDialog open={open} onOpenChange={setOpen}>
       <CommandInput placeholder="Find a meeting or agent" />
       <CommandList>
         <CommandItem>Test</CommandItem>
       </CommandList>
-    </CommandDialog>
+    </CommandResponsiveDialog>
   );
 };
 

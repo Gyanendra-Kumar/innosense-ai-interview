@@ -229,6 +229,10 @@
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
   }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
 .sidebar-gradient {
   background: var(--sidebar) !important; /* use full background */
