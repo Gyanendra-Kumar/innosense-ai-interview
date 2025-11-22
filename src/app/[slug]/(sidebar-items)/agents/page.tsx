@@ -15,29 +15,29 @@ const Page = async () => {
     <>
       <ListHeader />
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <Suspense
+        <ErrorBoundary
           fallback={
             <div className="flex items-center h-[calc(100vh-10rem)]">
-              <LoadingState
-                title="Loading Agent"
-                description="This may take a few seconds..."
+              <ErrorState
+                title="Failed to load agent"
+                description="Something went wrong! Please try again."
               />
             </div>
           }
         >
-          <ErrorBoundary
+          <Suspense
             fallback={
               <div className="flex items-center h-[calc(100vh-10rem)]">
-                <ErrorState
-                  title="Failed to load agent"
-                  description="Something went wrong! Please try again."
+                <LoadingState
+                  title="Loading Agent"
+                  description="This may take a few seconds..."
                 />
               </div>
             }
           >
             <AgentView />
-          </ErrorBoundary>
-        </Suspense>
+          </Suspense>
+        </ErrorBoundary>
       </HydrationBoundary>
     </>
   );
